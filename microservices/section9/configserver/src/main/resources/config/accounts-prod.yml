@@ -1,0 +1,12 @@
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to Prashant Labs accounts related prod APIs "
+  contactDetails:
+    name: "Prashant Dwivedi - Product Owner"
+    email: "prashantdwivedi@prashantlabs.com"
+  onCallSupport:
+    - 9999351616
+    - 9999161635

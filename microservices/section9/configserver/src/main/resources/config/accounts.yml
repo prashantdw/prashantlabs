@@ -1,0 +1,12 @@
+
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to Prashant Labs accounts related local APIs "
+  contactDetails:
+    name: "Prashant D - Developer"
+    email: "prashantdeveloper@prashantlabs.com"
+  onCallSupport:
+    - 9999351616
+    - 9999361515

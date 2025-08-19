@@ -1,0 +1,12 @@
+
+build:
+  version: "1.0"
+
+cards:
+  message: "Welcome to Prashant Labs cards related prod APIs "
+  contactDetails:
+    name: "Prashant Dwivedi - Product Owner"
+    email: "prashantdwivedi@prashantlabs.com"
+  onCallSupport:
+    - 9999351616
+    - 9310764077
