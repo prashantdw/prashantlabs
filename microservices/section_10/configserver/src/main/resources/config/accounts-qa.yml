@@ -1,0 +1,12 @@
+
+build:
+  version: "2.0"
+
+accounts:
+  message: "Welcome to Prashant Labs accounts related QA APIs "
+  contactDetails:
+    name: "Prashant T - QA Lead"
+    email: "prashantt@prashantlabs.com"
+  onCallSupport:
+    - 9999351616
+    - 9310764077
