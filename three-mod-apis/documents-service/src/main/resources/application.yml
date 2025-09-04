@@ -1,0 +1,38 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: documents-service
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+
+  web:
+    cors:
+      allowed-origins:
+        - "http://localhost:8083"
+        - "http://127.0.0.1:8083"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+
+app:
+  jwt:
+    secret: "8fd2a5e4f7673a8b94d712a8faefbc03"
+    issuer: "three-mod-apis"
+  storage:
+    dir: "./uploads"
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

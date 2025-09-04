@@ -1,0 +1,4 @@
+schema { query: Query, mutation: Mutation }
+type Echo { text: String!, who: String }
+type Query { echo(text: String!): Echo }
+type Mutation { ping: String }

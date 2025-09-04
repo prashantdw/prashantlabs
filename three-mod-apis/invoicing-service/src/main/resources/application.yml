@@ -1,0 +1,35 @@
+server: { port: 8082 }
+spring:
+  application: { name: invoicing-service }
+  mail:
+    host: localhost
+    port: 1025
+    username: ""
+    password: ""
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+  web:
+    cors:
+      allowed-origins:
+        - "http://localhost:8083"
+        - "http://127.0.0.1:8083"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+app:
+  jwt: { secret: "8fd2a5e4f7673a8b94d712a8faefbc03", issuer: "three-mod-apis" }
+  invoices: { dir: "./invoices" }
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+
+
+
+management.endpoints.web.exposure.include: health,info

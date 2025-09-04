@@ -1,0 +1,43 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: integrations-service
+  datasource:
+    url: jdbc:h2:mem:users;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true
+
+app:
+  jwt:
+    secret: "8fd2a5e4f7673a8b94d712a8faefbc03"
+    issuer: "three-mod-apis"
+  webhook:
+    secret: "8fd2a5e4f7673a8b94d712a8faefbc03"
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true   # enabled in UAT profile
+    urls:
+      - name: documents-service
+        url: http://localhost:8083/proxy/docs/documents
+      - name: invoicing-service
+        url: http://localhost:8083/proxy/docs/invoicing
+      - name: integrations-service
+        url: http://localhost:8083/proxy/docs/integrations
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
