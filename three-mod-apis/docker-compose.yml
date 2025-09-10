@@ -1,0 +1,80 @@
+version: '3.8'
+
+# Docker Compose configuration for the multi‑module Spring Boot project.
+#
+# Each service is built as a separate container image.  The images are expected
+# to be published to Docker Hub (or another registry) using the Jib Maven
+# plugin.  Replace `<your-dockerhub-username>` with your actual Docker Hub
+# username.  Before running `docker compose up`, make sure you have
+# built and pushed each image with Jib:
+#
+#   mvn -pl documents-service jib:build -Dimage=<your-dockerhub-username>/documents-service:latest
+#   mvn -pl invoicing-service jib:build -Dimage=<your-dockerhub-username>/invoicing-service:latest
+#   mvn -pl integrations-service jib:build -Dimage=<your-dockerhub-username>/integrations-service:latest
+#
+# You can then start all services along with MailHog using:
+#
+#   docker compose up
+#
+services:
+  documents-service:
+    image: prashantd15/documents-service:latest
+    container_name: documents-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=uat
+      # Shared JWT secret and issuer (must match your application.yml)
+      - APP_JWT_SECRET=8fd2a5e4f7673a8b94d712a8faefbc03
+      - APP_JWT_ISSUER=three-mod-apis
+      # Storage directory for uploaded bills
+      - APP_STORAGE_DIR=/tmp/uploads
+    networks:
+      - microservices-net
+
+  invoicing-service:
+    image: prashantd15/invoicing-service:latest
+    container_name: invoicing-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=uat
+      - APP_JWT_SECRET=8fd2a5e4f7673a8b94d712a8faefbc03
+      - APP_JWT_ISSUER=three-mod-apis
+      # Directory where invoices will be written inside the container
+      - APP_INVOICES_DIR=/tmp/invoices
+      # Mail settings; when running locally MailHog will capture outgoing mail
+      - SPRING_MAIL_HOST=mailhog
+      - SPRING_MAIL_PORT=1025
+    depends_on:
+      - mailhog
+    networks:
+      - microservices-net
+
+  integrations-service:
+    image: prashantd15/integrations-service:latest
+    container_name: integrations-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=uat
+      - APP_JWT_SECRET=8fd2a5e4f7673a8b94d712a8faefbc03
+      - APP_JWT_ISSUER=three-mod-apis
+      # Webhook secret used to verify incoming webhook signatures
+      - APP_WEBHOOK_SECRET=8fd2a5e4f7673a8b94d712a8faefbc03
+    networks:
+      - microservices-net
+
+  # Optional: local SMTP server for testing invoice emails
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "1025:1025"   # SMTP server
+      - "8025:8025"   # Web UI
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
